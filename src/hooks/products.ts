@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
-import {IList, IProducts} from "../models";
+import {IProducts, IPost} from "../models";
 import axios, {AxiosError} from "axios";
 
 export function useProducts() {
     const [products, setProducts] = useState<IProducts[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState('')
-    const [posts, setPosts] = useState<IList>({ results: [] });
+    const [post, setPosts] = useState<IPost[]>([])
 
     async function fetchProducts() {
         try {
@@ -26,8 +26,9 @@ export function useProducts() {
         try {
             setError('');
             setLoading(true);
-            const response = await axios.get<IList>('https://pokeapi.co/api/v2/pokemon?limit=100&offset=0');
+            const response = await axios.get<IPost[]>('https://pokeapi.co/api/v2/pokemon?limit=100&offset=0');
             setPosts(response.data);
+            console.log(response.data)
             setLoading(false);
         } catch (e: unknown) {
             const error = e as AxiosError;
@@ -41,5 +42,5 @@ export function useProducts() {
         getPokemonPosts()
     }, [])
 
-    return { products, loading, error, posts: posts.results }
+    return { products, loading, error, post }
 }

@@ -11,9 +11,8 @@ export interface IProducts {
     }
 }
 
-export interface IList {
-    results: {
-        name: string;
-        url: string
-    }[];
+export interface IPost {
+    number: number
+    name: string
+    url: string
 }
